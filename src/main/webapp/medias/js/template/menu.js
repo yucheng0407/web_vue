@@ -10,7 +10,7 @@ Vue.component('menucomp', {
 var menu = new Vue({
     el: '#index',
     data: {
-        curMenu:null,
+        curMenu:"",
         component: "pagecomp",
         menus: [{name: "主页1",comp:"pageComp"}, {name: "主页2",comp:"menuComp"}, {name: "主页3",comp:"pageComp"}]
     }
