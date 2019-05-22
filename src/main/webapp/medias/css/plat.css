@@ -1,0 +1,19 @@
+html, body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.top ul li {
+    line-height: 70px;
+    float: left;
+    width: 100px;
+}
+.top ul  {
+    float: left;
+}
+.top  {
+    height: 70px;
+}
+#index {
+    height: 100%;
+}

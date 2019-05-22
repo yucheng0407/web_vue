@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="medias/js/baseJs/vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="medias/css/plat.css"/>
+    <link rel="stylesheet" type="text/css" href="medias/css/Global.css"/>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="index">
+    <div class="top">
+        <ul v-if="menus&&menus.length>0">
+            <li v-for="menu in menus"><a href="javascript:void(0)" @click="curMenu=menu.name">{{menu.name}}</a></li>
+        </ul>
+    </div>
+    <component :menu="curMenu" :is="component"></component>
+    <script type="text/x-template" id="template-page">
+        <div style="height: 100%;background: red">
+            {{menu}}
+        </div>
+    </script>
+    <script type="text/x-template" id="template-menu">
+        <div style="height: 100%;background:#25ff00">
+            {{menu}}
+        </div>
+    </script>
+</div>
+
+<script type="text/javascript" src="medias/js/template/menu.js"></script>
+</body>
+</html>
