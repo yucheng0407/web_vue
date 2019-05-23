@@ -7,11 +7,11 @@ Vue.component('menucomp', {
     template: '#template-menu'
 })
 // boot up the demo
+var data=[{name: "主页1",comp:"pagecomp",subMenus:[{name: "主页1-2",comp:"menucomp"}, {name: "主页1-3",comp:"pagecomp"}]}, {name: "主页2",comp:"menucomp"}, {name: "主页3",comp:"pagecomp"}];
 var menu = new Vue({
     el: '#index',
     data: {
-        curMenu:null,
-        component: "pagecomp",
-        menus: [{name: "主页1",comp:"pageComp"}, {name: "主页2",comp:"menuComp"}, {name: "主页3",comp:"pageComp"}]
+        curMenu:data[0],
+        menus: data
     }
 })
