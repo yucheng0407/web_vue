@@ -18,31 +18,24 @@
     <div class="top">
         <ul v-if="menus&&menus.length>0">
             <li :class="{topselcet:curMenu.name==menu.name}" v-for="menu in menus">
-                <a href="javascript:void(0)" @click="curMenu=menu"><span class="xx">{{menu.name}}</span></a>
+                <a href="javascript:void(0)" @click="compMenu=menu.subMenus;curMenu=menu;"><span class="xx">{{menu.name}}</span></a>
                 <div v-if="menu.subMenus&&menu.subMenus.length>0" class="subMenus">
-                    <ul>
-                        <li v-for="subMenu in menu.subMenus">
-                            <a href="javascript:void(0)" @click="curMenu=subMenu"><span class="xx">{{subMenu.name}}</span></a>
-                        </li>
-                    </ul>
+                    <component :parent-name="parentName" :cur-comp-menu.sync="compMenu" :comp-menu="menu.subMenus" :cur-menu.sync="curMenu" is="pageComp"></component>
                 </div>
             </li>
         </ul>
     </div>
-    <component :menu="curMenu" :is="curMenu.comp"></component>
+    <div style="height: 100%;background: #cacaca">
+    <component :cur-comp-menu="compMenu" :comp-menu="compMenu" :cur-menu.sync="curMenu" is="pageComp"></component>
+    </div>
 </div>
 <script type="text/x-template" id="template-page">
-    <div style="height: 100%;background: red">
-        {{menu.name}}
-    </div>
+        <ul>
+            <li :class="{topselcet1:curMenu.name==menu.name}" v-for="menu in compMenu">
+                <a href="javascript:void(0)" @click="updateP(menu,compMenu)">{{menu.name}}</a>
+            </li>
+        </ul>
 </script>
-<script type="text/x-template" id="template-menu">
-    <div style="height: 100%;background:#25ff00">
-        {{menu.name}}
-    </div>
-</script>
-
-
 <script type="text/javascript" src="medias/js/template/menu.js"></script>
 </body>
 </html>

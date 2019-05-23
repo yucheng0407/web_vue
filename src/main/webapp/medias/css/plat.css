@@ -16,7 +16,7 @@ html, body {
     height:50px;
     width: 100%;
 }
-.top ul li:hover:not(.topselcet) {
+.top ul li:hover:not(.topselcet):not(.topselcet1) {
   background:#efefef ;
 }
 .top ul li:hover .subMenus{
@@ -32,6 +32,9 @@ html, body {
 }
 .topselcet{
     background: #cacaca;
+}
+.topselcet1{
+    background: #221dca;
 }
 #index {
     height:100%;
