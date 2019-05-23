@@ -17,21 +17,32 @@
 <div id="index">
     <div class="top">
         <ul v-if="menus&&menus.length>0">
-            <li v-for="menu in menus"><a href="javascript:void(0)" @click="curMenu=menu.name">{{menu.name}}</a></li>
+            <li :class="{topselcet:curMenu.name==menu.name}" v-for="menu in menus">
+                <a href="javascript:void(0)" @click="curMenu=menu"><span class="xx">{{menu.name}}</span></a>
+                <div v-if="menu.subMenus&&menu.subMenus.length>0" class="subMenus">
+                    <ul>
+                        <li v-for="subMenu in menu.subMenus">
+                            <a href="javascript:void(0)" @click="curMenu=subMenu"><span class="xx">{{subMenu.name}}</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
-    <component :menu="curMenu" :is="component"></component>
+    <component :menu="curMenu" :is="curMenu.comp"></component>
 </div>
 <script type="text/x-template" id="template-page">
     <div style="height: 100%;background: red">
-        {{menu}}
+        {{menu.name}}
     </div>
 </script>
 <script type="text/x-template" id="template-menu">
     <div style="height: 100%;background:#25ff00">
-        {{menu}}
+        {{menu.name}}
     </div>
 </script>
+
+
 <script type="text/javascript" src="medias/js/template/menu.js"></script>
 </body>
 </html>
