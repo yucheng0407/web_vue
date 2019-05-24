@@ -16,25 +16,31 @@
 <body>
 <div id="index">
     <div class="top">
+        {{Math.floor(Math.random()*10)}}
         <ul v-if="menus&&menus.length>0">
-            <li :class="{topselcet:curMenu.name==menu.name}" v-for="menu in menus">
-                <a href="javascript:void(0)" @click="compMenu=menu.subMenus;curMenu=menu;"><span class="xx">{{menu.name}}</span></a>
+            <li :class="{topselcet:curData.compMenu.name==menu.name}"
+                v-for="menu in menus">
+                <a href="javascript:void(0)" @click="goTo(menu)"><span class="xx">{{menu.name}}</span></a>
                 <div v-if="menu.subMenus&&menu.subMenus.length>0" class="subMenus">
-                    <component :parent-name="parentName" :cur-comp-menu.sync="compMenu" :comp-menu="menu.subMenus" :cur-menu.sync="curMenu" is="pageComp"></component>
+                    <component :p-cur-data.sync="curData" :comp-menu="menu" is="pageComp"></component>
                 </div>
             </li>
         </ul>
     </div>
-    <div style="height: 100%;background: #cacaca">
-    <component :cur-comp-menu="compMenu" :comp-menu="compMenu" :cur-menu.sync="curMenu" is="pageComp"></component>
+    <div class="leftMenu"  v-if="curData.compMenu.subMenus&&curData.compMenu.subMenus.length>0">
+        <component :p-cur-data.sync="curData" :comp-menu="curData.compMenu" is="pageComp"></component>
+    </div>
+    <div style="height: 100%;width:100%;">
+        <iframe name="index"  frameborder="0" width="100%" height="100%" scrolling="auto"
+                :src="curData.curMenu.url"></iframe>
     </div>
 </div>
 <script type="text/x-template" id="template-page">
-        <ul>
-            <li :class="{topselcet1:curMenu.name==menu.name}" v-for="menu in compMenu">
-                <a href="javascript:void(0)" @click="updateP(menu,compMenu)">{{menu.name}}</a>
-            </li>
-        </ul>
+    <ul>
+        <li :class="{topselcet1:pCurData.curMenu.name==menu.name}" v-for="menu in compMenu.subMenus">
+            <a href="javascript:void(0)" @click="updateP(menu,compMenu)">{{menu.name}}</a>
+        </li>
+    </ul>
 </script>
 <script type="text/javascript" src="medias/js/template/menu.js"></script>
 </body>

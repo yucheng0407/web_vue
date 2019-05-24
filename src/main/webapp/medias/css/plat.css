@@ -2,46 +2,72 @@ html, body {
     margin: 0;
     overflow: hidden;
 }
-.top ul li a{
-  display: block;
-}
+
 .top ul li {
-    line-height:50px;
+    line-height: 50px;
     float: left;
     width: 100px;
 }
+
+.top ul li a {
+    display: block;
+}
+
 .top ul li .subMenus {
     display: none;
-    background:#ffffff;
-    height:50px;
+    background: #ffffff;
+    height: 50px;
     width: 100%;
 }
+
+.leftMenu ul li a {
+    display: block;
+}
+
+.leftMenu {
+    height: 100%;
+    width: 200px;
+    background: #cacaca
+}
+
+.leftMenu ul li {
+    line-height: 50px;
+    text-align: center;
+}
+
 .top ul li:hover:not(.topselcet):not(.topselcet1) {
-  background:#efefef ;
+    background: #efefef;
 }
-.top ul li:hover .subMenus{
-    display:block;
+
+.top ul li:hover .subMenus {
+    display: block;
 }
-.top ul  {
+
+.top ul {
     float: right;
     text-align: center;
 }
-.top  {
+
+.top {
     background: #ffffff;
-    height:50px;
+    height: 50px;
 }
-.topselcet{
+
+.topselcet {
     background: #cacaca;
 }
-.topselcet1{
+
+.topselcet1 {
     background: #221dca;
 }
+
 #index {
-    height:100%;
+    height: 100%;
 }
-.xx{
+
+.xx {
     background-size: 5px;
     background-image: url("../imges/ty.png");
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-position-x: right;
 }
