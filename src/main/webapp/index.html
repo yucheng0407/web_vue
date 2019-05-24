@@ -16,37 +16,25 @@
 <body>
 <div id="index">
     <div class="top">
-        <span>{{com}}</span>
         <ul v-if="menus&&menus.length>0">
-            <li>
-                <span>{{com}}</span>
-            </li>
             <li :class="{topselcet:curMenu.name==menu.name}" v-for="menu in menus">
-                <a href="javascript:void(0)" @click="curMenu=menu;compMenu=menu.subMenus"><span
-                        class="xx">{{menu.name}}</span></a>
+                <a href="javascript:void(0)" @click="compMenu=menu.subMenus;curMenu=menu;"><span class="xx">{{menu.name}}</span></a>
                 <div v-if="menu.subMenus&&menu.subMenus.length>0" class="subMenus">
-                    <component :show.sync="com" :comp-menu.sync="menu.subMenus" :cur-menu.sync="curMenu" is="pagecomp"></component>
+                    <component :parent-name="parentName" :cur-comp-menu.sync="compMenu" :comp-menu="menu.subMenus" :cur-menu.sync="curMenu" is="pageComp"></component>
                 </div>
             </li>
         </ul>
     </div>
-    <div style="height: 100%;background: #b3b1b1">
-        <component :comp-menu.sync="compMenu" :show="com" :cur-menu.sync="curMenu" is="pagecomp"></component>
+    <div style="height: 100%;background: #cacaca">
+    <component :cur-comp-menu="compMenu" :comp-menu="compMenu" :cur-menu.sync="curMenu" is="pageComp"></component>
     </div>
 </div>
 <script type="text/x-template" id="template-page">
-    <ul>
-        <li v-for="m in compMenu">
-            <a href="javascript:void(0) " @click="updateP(m,compMenu)">{{m.name}}</a>
-        </li>
-        <li>
-            <a href="javascript:void(0) " @click="updateP">{{show}}</a>
-        </li>
-        <li>
-            <a href="javascript:void(0) " @click="updateP">{{curMenu.name}}</a>
-        </li>
-    </ul>
-
+        <ul>
+            <li :class="{topselcet1:curMenu.name==menu.name}" v-for="menu in compMenu">
+                <a href="javascript:void(0)" @click="updateP(menu,compMenu)">{{menu.name}}</a>
+            </li>
+        </ul>
 </script>
 <script type="text/javascript" src="medias/js/template/menu.js"></script>
 </body>
