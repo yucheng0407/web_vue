@@ -32,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr  @dblclick="dblclick(data)" @click="click"
+                <tr  :class="{select:data._sel}" @dblclick="dblclick(data)" @click="click(data)"
                     v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
                     <td v-for="config in tableConfig">{{data[config.type]}}</td>
                 </tr>
@@ -61,15 +61,14 @@
             dblclick: function (data) {
                 debugger
             },
-            click: function (e) {
-                var $e = $(e.target).parent();
-                if ($e.hasClass("select")) {
-                    $e.removeClass("select")
+            click: function (data) {
+                if (data._sel) {//
+                  Vue.set(data,'_sel',null);
+                //   data._sel=null;
                 }else {
-                    $e.addClass("select")
+                   Vue.set(data,'_sel',true);
+            //      data._sel=true;
                 }
-//                e.target.parentElement.classList.add('select');
-//                debugger
             }
         }
     });
