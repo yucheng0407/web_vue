@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="medias/css/Global.css"/>
+    <link rel="stylesheet" type="text/css" href="medias/css/plat.css"/>
+    <link rel="stylesheet" type="text/css" href="medias/css/iconFont/iconfont.css"/>
+    <script type="text/javascript" src="medias/js/baseJs/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="medias/js/baseJs/vue.js"></script>
+    <script type="text/javascript" src="medias/js/baseJs/componentVue.js"></script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%">
+    <template id="basePage">
+        <div :other="otherUpdate" class="digg" >
+            <a :class="{disabled:page.index==1}" @click="page.index>1?page.index--:page.index">&lt;</a>
+            {{isStartOther?'...':''}}
+            <a v-for="i in otherNum" :class="{current:(i+otherIndex-1)==page.index}" @click="page.index=(i+otherIndex-1)">{{(i+otherIndex-1)}}</a>
+            {{isEndOther?'...':''}}
+            <a :class="{disabled:page.index==page.pageNum}" @click="page.index<page.pageNum?page.index++:page.index">
+                &gt;</a></div>
+    </template>
+    <template id="baseTable">
+        <div>
+    <table class="gridtable" style="width: 100%">
+        <colgroup>
+            <col v-for="config in tableConfig" :width="config.width"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th v-for="config in tableConfig" >{{config.name}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
+            <td v-for="config in tableConfig" >{{data[config.type]}}</td>
+        </tr>
+        </tbody>
+    </table>
+        <component v-if="tableSetting.limit" is="basePage" :page="page"></component>
+            </div>
+    </template>
+    <div id="page">
+        <component is="baseTable" :table-config="tableConfig" :table-data="tableData" :table-setting="tableSetting"></component>
+    </div>
+</div>
+<script>
+    /**
+     * 翻页组件
+     * page:{当前页 index:Number,页数 pageNum:Number}
+     */
+    Vue.component("baseTable", {
+        props: ['tableData','tableConfig','tableSetting'],
+        template: '#baseTable',
+        data:function () {
+            return {page:{index:1,pageNum:(Math.ceil(this.tableData.length / this.tableSetting.limit))}}
+        }
+    });
+    var list=[];
+for (var i=0;i<40;i++)
+{
+    list.push({a:i+1,b:2,c:3,d:4})
+}
+    new Vue({
+        el: "#page",
+        data: {tableSetting:{limit:8},tableData:list,tableConfig:[{name:1111,type:'a',width:'50'},{name:222,type:'b'},{name:3,type:'c'},{name:4,type:'d'}]}
+    })
+</script>
+
+</body>
+</html>
