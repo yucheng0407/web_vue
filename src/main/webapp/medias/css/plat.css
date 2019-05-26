@@ -182,10 +182,10 @@ table.gridtable tbody td {
 table.gridtable tbody tr {
     background-color: #ffffff;
 }
-table.gridtable tbody tr:hover:not(.slecet) {
+table.gridtable tbody tr:hover:not(.select) {
     background-color: #efefef;
 }
-table.gridtable tbody .slecet {
+table.gridtable tbody .select {
     background-color: #2e85c1;
 }
 div.digg {

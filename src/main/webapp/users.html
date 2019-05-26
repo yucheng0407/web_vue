@@ -20,37 +20,30 @@
 </head>
 <body>
 <div style="width: 100%">
-    <template id="basePage">
-        <div :other="otherUpdate" class="digg" >
-            <a :class="{disabled:page.index==1}" @click="page.index>1?page.index--:page.index">&lt;</a>
-            {{isStartOther?'...':''}}
-            <a v-for="i in otherNum" :class="{current:(i+otherIndex-1)==page.index}" @click="page.index=(i+otherIndex-1)">{{(i+otherIndex-1)}}</a>
-            {{isEndOther?'...':''}}
-            <a :class="{disabled:page.index==page.pageNum}" @click="page.index<page.pageNum?page.index++:page.index">
-                &gt;</a></div>
-    </template>
     <template id="baseTable">
         <div>
-    <table class="gridtable" style="width: 100%">
-        <colgroup>
-            <col v-for="config in tableConfig" :width="config.width"/>
-        </colgroup>
-        <thead>
-        <tr>
-            <th v-for="config in tableConfig" >{{config.name}}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
-            <td v-for="config in tableConfig" >{{data[config.type]}}</td>
-        </tr>
-        </tbody>
-    </table>
-        <component v-if="tableSetting.limit" is="basePage" :page="page"></component>
-            </div>
+            <table class="gridtable" style="width: 100%">
+                <colgroup>
+                    <col v-for="config in tableConfig" :width="config.width"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th v-for="config in tableConfig">{{config.name}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  @dblclick="dblclick(data)" @click="click"
+                    v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
+                    <td v-for="config in tableConfig">{{data[config.type]}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <component v-if="tableSetting.limit" is="basePage" :page="page"></component>
+        </div>
     </template>
     <div id="page">
-        <component is="baseTable" :table-config="tableConfig" :table-data="tableData" :table-setting="tableSetting"></component>
+        <component is="baseTable" :table-config="tableConfig" :table-data="tableData"
+                   :table-setting="tableSetting"></component>
     </div>
 </div>
 <script>
@@ -59,20 +52,41 @@
      * page:{当前页 index:Number,页数 pageNum:Number}
      */
     Vue.component("baseTable", {
-        props: ['tableData','tableConfig','tableSetting'],
+        props: ['tableData', 'tableConfig', 'tableSetting'],
         template: '#baseTable',
-        data:function () {
-            return {page:{index:1,pageNum:(Math.ceil(this.tableData.length / this.tableSetting.limit))}}
+        data: function () {
+            return {page: {index: 1, pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
+        },
+        methods: {
+            dblclick: function (data) {
+                debugger
+            },
+            click: function (e) {
+                var $e = $(e.target).parent();
+                if ($e.hasClass("select")) {
+                    $e.removeClass("select")
+                }else {
+                    $e.addClass("select")
+                }
+//                e.target.parentElement.classList.add('select');
+//                debugger
+            }
         }
     });
-    var list=[];
-for (var i=0;i<40;i++)
-{
-    list.push({a:i+1,b:2,c:3,d:4})
-}
+    var list = [];
+    for (var i = 0; i < 40; i++) {
+        list.push({a: i + 1, b: 2, c: 3, d: 4})
+    }
     new Vue({
         el: "#page",
-        data: {tableSetting:{limit:8},tableData:list,tableConfig:[{name:1111,type:'a',width:'50'},{name:222,type:'b'},{name:3,type:'c'},{name:4,type:'d'}]}
+        data: {
+            tableSetting: {limit: 8},
+            tableData: list,
+            tableConfig: [{name: 1111, type: 'a', width: '50'}, {name: 222, type: 'b'}, {name: 3, type: 'c'}, {
+                name: 4,
+                type: 'd'
+            }]
+        }
     })
 </script>
 

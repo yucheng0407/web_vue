@@ -32,6 +32,7 @@
             </li>
         </ul>
     </div>
+    <div class="body">
     <div class="leftMenu"
          v-if="curData.compMenu.subMenus&&curData.compMenu.subMenus.length>0" :style="leftMenuStyle">
         <component :style-data="styleData" :p-cur-data.sync="curData" :comp-menu="curData.compMenu" is="pageComp"></component>
@@ -44,6 +45,7 @@
         <iframe name="index" frameborder="0" width="100%" height="100%" scrolling="auto"
                 :src="curData.curMenu.url"></iframe>
     </div>
+    </div>
 </div>
 <template id="template-page">
     <ul>
@@ -53,5 +55,8 @@
     </ul>
 </template>
 <script type="text/javascript" src="medias/js/template/menu.js"></script>
+<script>
+    $(".body").height($("body").height()-$(".top").height());
+    </script>
 </body>
 </html>

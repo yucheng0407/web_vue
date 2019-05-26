@@ -22,7 +22,8 @@ Vue.component("baseSearch", {
  */
 Vue.component("basePage", {
     props: ['page'],
-    template: '#basePage',
+    template: '<div :other="otherUpdate" class="digg" ><a :class="{disabled:page.index==1}" @click="page.index>1?page.index--:page.index">&lt;</a>{{isStartOther?"...":""}}' +
+    '<a v-for="i in otherNum" :class="{current:(i+otherIndex-1)==page.index}" @click="page.index=(i+otherIndex-1)">{{(i+otherIndex-1)}}</a>{{isEndOther?"...":""}} <a :class="{disabled:page.index==page.pageNum}" @click="page.index<page.pageNum?page.index++:page.index"> &gt;</a></div>',
     data: function () {
         return {isStartOther: false, isEndOther: false, otherIndex: 1, otherNum: this.page.pageNum>5?5:this.page.pageNum}
     },
