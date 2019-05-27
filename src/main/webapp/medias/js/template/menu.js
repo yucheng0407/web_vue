@@ -4,7 +4,7 @@ var data = [{
     comp: "pageComp",
     url: "iconFont.html",
     icon: "&#xe71d;",
-    subMenus: [{name: "主页1-1",icon: "&#xe71d;", comp: "menucomp", url: "test.html"}, {name: "主页1-2", comp: "pageComp"}, {
+    subMenus: [{name: "主页1-1",icon: "&#xe71d;", comp: "menucomp", url: "test.html"}, {name: "主页1-2", comp: "pageComp",icon:"&#xe71d;"}, {
         name: "主页1-3",
         comp: "pageComp"
     }]

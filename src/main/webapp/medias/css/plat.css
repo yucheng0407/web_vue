@@ -26,7 +26,8 @@ i {
 }
 
 .top ul li {
-    line-height: 49px;
+    line-height: 50px;
+    height: 50px;
     float: left;
     width: 100px;
     position: relative;
@@ -59,6 +60,7 @@ i {
 }
 
 .top ul li a {
+    height: 100%;
     display: block;
     color: #ffffff;
     font-size: 16px;
@@ -84,6 +86,7 @@ i {
 
 .leftMenu ul li {
     line-height: 50px;
+    height: 50px;
     text-align: center;
     border-bottom: 1px solid #4e4e4e;
 }
@@ -91,10 +94,21 @@ i {
 .leftMenu .topselcet1 {
     background: #ed5250;
     border-left: 4px solid #ffffff;
+    box-sizing: border-box;
 }
-
-.leftMenu ul li:hover:not(.topselcet1) {
+.leftMenu .topselcet1 i{
+    margin-right: 4px;
+}
+.leftMenu .topselcet1 span{
+    margin-right: 4px;
+}
+.leftMenu ul li a:hover:not(.topselcet1) {
     background: #414b56;
+    box-sizing: border-box;
+    border-left: 4px solid #009688;
+}
+.leftMenu ul li a:hover:not(.topselcet1) i {
+    margin-right: 4px;
 }
 
 .toggle {
@@ -131,10 +145,13 @@ i {
 .subMenus ul li:hover {
     background: #cacaca !important;
 }
+
 .subMenus ul li {
-    border-bottom:1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
     line-height: 40px;
+    height: 40px;
 }
+
 .subMenus .topselcet1 {
     background: #ed5250;
     border-left: 4px solid #ffffff;
@@ -158,13 +175,14 @@ i {
 }
 
 table.gridtable {
-    font-family: verdana,arial,sans-serif;
-    font-size:11px;
-    color:#333333;
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
     border-width: 1px;
     border-color: #666666;
     border-collapse: collapse;
 }
+
 table.gridtable thead th {
     border-width: 1px;
     padding: 5px;
@@ -172,6 +190,7 @@ table.gridtable thead th {
     border-color: #666666;
     background-color: #cacaca;
 }
+
 table.gridtable tbody td {
     text-align: center;
     border-width: 1px;
@@ -179,42 +198,91 @@ table.gridtable tbody td {
     border-style: solid;
     border-color: #666666;
 }
+
 table.gridtable tbody tr {
     background-color: #ffffff;
 }
+
 table.gridtable tbody tr:hover:not(.select) {
     background-color: #efefef;
 }
+
 table.gridtable tbody .select {
     background-color: #2e85c1;
 }
+.button:hover{
+    background: #0079c3;
+}
+.button {
+    float: left;
+    border: 1px solid #2e85c1;
+    width: auto;
+    height: 32px;
+    line-height: 32px;
+    color: #fff;
+    background: #2e85c1;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 10px 10px;
+    padding: 0 5px;
+    border-radius: 4px;
+}
+a.button.danger {
+    border: 1px solid #d9534f;
+    background: #d9534f;
+}
+.button.danger:hover{
+    background: #d94846 !important;
+}
+.button.warning:hover{
+    background: #ff9298 !important;
+}
+.button.success:hover{
+    background: red !important;
+}
+a.button.success {
+    border: 1px solid #5cb85c;
+    background: #5cb85c;
+}
+a.button.warning {
+    border: 1px solid #f0ad4e;
+    background: #f0ad4e;
+}
 div.digg {
-    padding-right: 3px; padding-left: 3px; padding-bottom: 3px;
-    margin: 3px; padding-top: 3px; float: right;
+    padding: 3px;
+    margin: 3px;
+    float: right;
     background: white;
 }
+
 div.digg a {
-    border-right: #aaaadd 1px solid; padding-right: 5px; border-top: #aaaadd 1px solid;
-    padding-left: 5px; padding-bottom: 2px; margin: 2px;
-    border-left: #aaaadd 1px solid; color: #000099; padding-top: 2px;
-    border-bottom: #aaaadd 1px solid; text-decoration: none
+    /*display: block;*/
+    /*float: left;*/
+    font-size: 15px;
+    border: #aaaadd 1px solid;
+    padding: 2px 6px 2px 6px;
+    margin: 2px;
+    color: #000000;
+    text-decoration: none
 }
+
 div.digg a:hover {
-    border-right: #000099 1px solid; border-top: #000099 1px solid;
-    border-left: #000099 1px solid; color: #000; border-bottom: #000099 1px solid
+    border: #0079c3 1px solid;
 }
+
 div.digg a.current {
-    border-right: #000099 1px solid; padding-right: 5px;
-    border-top: #000099 1px solid; padding-left: 5px; font-weight: bold;
-    padding-bottom: 2px; margin: 2px; border-left: #000099 1px solid;
-    color: #fff; padding-top: 2px; border-bottom: #000099 1px solid; background-color: #000099
+    border: #0079c3 1px solid;
+    font-weight: bold;
+    color: #fff;
+    background-color: #0079c3
 }
+
 div.digg a.disabled {
-    border-right: #eee 1px solid; padding-right: 5px; border-top: #eee 1px solid;
-    padding-left: 5px; padding-bottom: 2px; margin: 2px;
-    border-left: #eee 1px solid; color: #ddd; padding-top: 2px;
-    border-bottom: #eee 1px solid
+    border: #eee 1px solid;
+    color: #ddd;
 }
+
 .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
 }

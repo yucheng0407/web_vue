@@ -21,7 +21,8 @@
 <body>
 <div style="width: 100%">
     <template id="baseTable">
-        <div>
+        <div :pagenum="page.pageNum=(Math.ceil(tableData.length / tableSetting.limit))">
+            <component is="baseButton" :buttons="tableSetting.buttons"></component>
             <table class="gridtable" style="width: 100%">
                 <colgroup>
                     <col v-for="config in tableConfig" :width="config.width"/>
@@ -32,7 +33,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr  :class="{select:data._sel}" @dblclick="dblclick(data)" @click="click(data)"
+                <tr :class="{select:data._sel}" @dblclick="dblclick(data)" @click="click(data)"
                     v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
                     <td v-for="config in tableConfig">{{data[config.type]}}</td>
                 </tr>
@@ -41,12 +42,21 @@
             <component v-if="tableSetting.limit" is="basePage" :page="page"></component>
         </div>
     </template>
+    <template id="baseButton">
+        <div><a v-for="button in buttons" class="button" @click="button.onClick" :class="button.type"><i
+                style="font-size: 20px" v-if="button.icon" class="iconfont" v-html="button.icon"></i>{{button.name}}</a>
+        </div>
+    </template>
     <div id="page">
-        <component is="baseTable" :table-config="tableConfig" :table-data="tableData"
+        <component ref="table" is="baseTable" :table-config="tableConfig" :table-data="tableData"
                    :table-setting="tableSetting"></component>
     </div>
 </div>
 <script>
+    Vue.component("baseButton", {
+        props: ['buttons'],
+        template: '#baseButton'
+    })
     /**
      * 翻页组件
      * page:{当前页 index:Number,页数 pageNum:Number}
@@ -58,28 +68,51 @@
             return {page: {index: 1, pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
         },
         methods: {
+            delSel: function () {
+                for (var i = this.tableData.length - 1; i >= 0; i--) {
+                    if (this.tableData[i]._sel) {
+                        this.tableData.splice(i, 1);
+                    }
+                }
+            },
+            getSel: function () {
+                return this.tableData.filter(function (d) {
+                    return d._sel;
+                })
+            },
             dblclick: function (data) {
                 debugger
             },
             click: function (data) {
                 if (data._sel) {//
-                  Vue.set(data,'_sel',null);
-                //   data._sel=null;
-                }else {
-                   Vue.set(data,'_sel',true);
-            //      data._sel=true;
+                    Vue.set(data, '_sel', null);
+                    //   data._sel=null;
+                } else {
+                    Vue.set(data, '_sel', true);
+                    //      data._sel=true;
                 }
             }
         }
     });
     var list = [];
-    for (var i = 0; i < 40; i++) {
+    for (var i = 0; i < 50; i++) {
         list.push({a: i + 1, b: 2, c: 3, d: 4})
     }
-    new Vue({
+    var vue = new Vue({
         el: "#page",
         data: {
-            tableSetting: {limit: 8},
+            tableSetting: {
+                limit: 8, buttons: [{
+                    name: "新增",icon:"&#xe6e2;", onClick: function () {
+                        vue.$refs.table.getSel()
+                        debugger
+                    }
+                }, {
+                    name: "删除", type: "danger", icon: "&#xe70a;", onClick: function () {
+                        vue.$refs.table.delSel()
+                    }
+                }]
+            },
             tableData: list,
             tableConfig: [{name: 1111, type: 'a', width: '50'}, {name: 222, type: 'b'}, {name: 3, type: 'c'}, {
                 name: 4,

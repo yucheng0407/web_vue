@@ -50,7 +50,7 @@
 <template id="template-page">
     <ul>
         <li v-for="menu in compMenu.subMenus">
-            <a :class="{topselcet1:pCurData.curMenu.name==menu.name}" href="javascript:void(0)" @click="updateP(menu,compMenu)"><i class="iconfont" v-html="menu.icon"></i><span style="vertical-align: middle;">{{menu.name}}</span></a>
+            <a :class="{topselcet1:pCurData.curMenu.name==menu.name}" href="javascript:void(0)" @click="updateP(menu,compMenu)"><i v-if="menu.icon" class="iconfont" v-html="menu.icon"></i><span style="vertical-align: middle;">{{menu.name}}</span></a>
         </li>
     </ul>
 </template>
