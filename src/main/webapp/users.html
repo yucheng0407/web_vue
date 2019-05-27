@@ -14,12 +14,13 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
+            background: #fff;
 
         }
     </style>
 </head>
 <body>
-<div style="width: 100%">
+<div style="padding: 50px">
     <template id="baseTable">
         <div :pagenum="page.pageNum=(Math.ceil(tableData.length / tableSetting.limit))">
             <component is="baseButton" :buttons="tableSetting.buttons"></component>
@@ -29,12 +30,14 @@
                 </colgroup>
                 <thead>
                 <tr>
+                    <th><input type="checkbox" style="display: none"/><i for="checkbox" class="check"></i></th>
                     <th v-for="config in tableConfig">{{config.name}}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr :class="{select:data._sel}" @dblclick="dblclick(data)" @click="click(data)"
+                <tr @dblclick="dblclick(data)" @click="click(data)"
                     v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
+                    <td><input type="checkbox" style="display: none"/><i for="checkbox" class="check" :class="{checked:data._sel}"></i></td>
                     <td v-for="config in tableConfig">{{data[config.type]}}</td>
                 </tr>
                 </tbody>

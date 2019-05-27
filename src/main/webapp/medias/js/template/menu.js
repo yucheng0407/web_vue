@@ -4,7 +4,7 @@ var data = [{
     comp: "pageComp",
     url: "iconFont.html",
     icon: "&#xe71d;",
-    subMenus: [{name: "主页1-1",icon: "&#xe71d;", comp: "menucomp", url: "test.html"}, {name: "主页1-2", comp: "pageComp",icon:"&#xe71d;"}, {
+    subMenus: [{name: "主页1-1",icon: "&#xe71d;", comp: "menucomp", url: "test.html"}, {name: "主页1-2", comp: "pageComp",icon:"&#xe71d;",url:"users.html"}, {
         name: "主页1-3",
         comp: "pageComp"
     }]
@@ -27,17 +27,17 @@ var Vmenu = new Vue({
     },
     computed: {
         rightBodyStyle: function () {
-            var width = this.$el.getElementsByClassName("top")[0].offsetWidth - 200;
+            var width = this.$el.getElementsByClassName("top")[0].offsetWidth - 300;
             if (this.styleData.isAnimate) {
                 this.styleData.isLeftMenuShow ? $(".rightBody").animate({
                     width: width
                 }, 500) : $(".rightBody").animate({
-                    width: width + 200
+                    width: width + 300
                 }, 500);
             }
             else {
                 return {
-                    width: this.styleData.isLeftMenuShow ? width + "px" : width + 200 + "px"
+                    width: this.styleData.isLeftMenuShow ? width + "px" : width + 300 + "px"
                 }
             }
         }
@@ -47,11 +47,11 @@ var Vmenu = new Vue({
                 this.styleData.isLeftMenuShow ? $(".leftMenu").animate({
                     marginLeft: 0
                 }, 500) : $(".leftMenu").animate({
-                    marginLeft: -200
+                    marginLeft: -300
                 }, 500);
             } else {
                 return {
-                    marginLeft: this.styleData.isLeftMenuShow ? 0 : -200 + "px"
+                    marginLeft: this.styleData.isLeftMenuShow ? 0 : -300 + "px"
                 }
             }
         }
