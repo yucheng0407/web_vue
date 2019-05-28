@@ -49,8 +49,8 @@
         </div>
     </template>
     <template id="baseButton">
-        <div><a v-for="button in buttons" class="button" @click="button.onClick" :class="button.type"><i
-                style="font-size: 20px" v-if="button.icon" class="iconfont" v-html="button.icon"></i>{{button.name}}</a>
+        <div style="float: left"><button v-for="button in buttons" class="button" @click="button.onClick" :class="button.type"><i
+                style="font-size: 20px" v-if="button.icon" class="iconfont" v-html="button.icon"></i><span>{{button.name}}</span></button>
         </div>
     </template>
     <div id="page">

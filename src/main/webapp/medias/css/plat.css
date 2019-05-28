@@ -298,19 +298,19 @@ table.gridtable tbody .select {
 }
 .button {
     float: left;
-    border-color:#2e85c1;
+    border-color: #2e85c1;
     width: auto;
-    height: 32px;
-    line-height: 32px;
+    height: 38px;
     color: #fff;
     background: #2e85c1;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: normal;
     margin: 10px 10px;
-    padding: 0 5px;
+    padding: 0 10px;
     border-radius: 4px;
+    cursor: pointer;
 }
-a.button.danger {
+.button.danger {
     border-color:#d9534f;
     background: #d9534f;
 }
@@ -323,11 +323,11 @@ a.button.danger {
 .button.success:hover{
     background: red !important;
 }
-a.button.success {
+.button.success {
     border-color:#5cb85c;
     background: #5cb85c;
 }
-a.button.warning {
+.button.warning {
     border: 1px solid #f0ad4e;
     background: #f0ad4e;
 }
