@@ -32,8 +32,8 @@
                 <tr>
                     <th><input type="checkbox" style="display: none" /><i for="checkbox" class="check" :class="{checked:isAllChecked}" title="全选" @click="allChecked"></i></th>
                     <th v-for="config in tableConfig">{{config.name}}<span v-if="config.isSort" class="sort"><i
-                            class="sort-edge sort-asc" title="升序" @click="asc(config.type)"></i><i
-                            class="sort-edge sort-desc" title="降序" @click="desc(config.type)"></i></span></th>
+                            class="sort-edge sort-asc"  :class="sortType" title="升序" @click="asc(config.type)"></i><i
+                            class="sort-edge sort-desc" :class="sortType" title="降序" @click="desc(config.type)"></i></span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
         props: ['tableData', 'tableConfig', 'tableSetting'],
         template: '#baseTable',
         data: function () {
-            return {isAllChecked:false,page: {index: 1, pageLength:this.tableData.length,pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
+            return {sortType:null,isAllChecked:false,page: {index: 1, pageLength:this.tableData.length,pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
         },
         methods: {
             allChecked:function () {
@@ -83,10 +83,12 @@
             asc: function (type) {
                 this.tableData.sort(function (a, b) { return a[type]-b[type] })
                 this.page.index=1;
+                this.sortType="sort-asced";
             },
             desc: function (type) {
                 this.tableData.sort(function (a, b) { return b[type]-a[type] })
                 this.page.index=1;
+                this.sortType="sort-desced";
             },
             delSel: function () {
                 for (var i = this.tableData.length - 1; i >= 0; i--) {

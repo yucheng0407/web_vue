@@ -261,6 +261,12 @@ table.gridtable tbody .select {
 .sort .sort-asc:hover {
     border-bottom-color: #666;
 }
+.sort .sort-desced {
+    border-top-color: #666 !important;;
+}
+.sort .sort-asced {
+    border-bottom-color: #666 !important;
+}
 .sort .sort-desc {
     bottom: 2px;
     border-bottom: none;
