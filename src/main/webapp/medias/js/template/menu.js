@@ -17,7 +17,8 @@ var Vmenu = new Vue({
     data: {
         styleData: {
             isLeftMenuShow: true,
-            isAnimate: false
+            isAnimate: false,
+            leftMenuWidth:$(".leftMenu").width()
         },
         curData: {
             compMenu: data[0],
@@ -27,17 +28,17 @@ var Vmenu = new Vue({
     },
     computed: {
         rightBodyStyle: function () {
-            var width = this.$el.getElementsByClassName("top")[0].offsetWidth - 300;
+            var width = this.$el.getElementsByClassName("top")[0].offsetWidth - this.styleData.leftMenuWidth;
             if (this.styleData.isAnimate) {
                 this.styleData.isLeftMenuShow ? $(".rightBody").animate({
                     width: width
                 }, 500) : $(".rightBody").animate({
-                    width: width + 300
+                    width: width + this.styleData.leftMenuWidth
                 }, 500);
             }
             else {
                 return {
-                    width: this.styleData.isLeftMenuShow ? width + "px" : width + 300 + "px"
+                    width: this.styleData.isLeftMenuShow ? width + "px" : width + this.styleData.leftMenuWidth + "px"
                 }
             }
         }
@@ -47,11 +48,11 @@ var Vmenu = new Vue({
                 this.styleData.isLeftMenuShow ? $(".leftMenu").animate({
                     marginLeft: 0
                 }, 500) : $(".leftMenu").animate({
-                    marginLeft: -300
+                    marginLeft: -this.styleData.leftMenuWidth
                 }, 500);
             } else {
                 return {
-                    marginLeft: this.styleData.isLeftMenuShow ? 0 : -300 + "px"
+                    marginLeft: this.styleData.isLeftMenuShow ? 0 : -this.styleData.leftMenuWidth + "px"
                 }
             }
         }
