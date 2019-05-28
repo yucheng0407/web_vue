@@ -11,6 +11,12 @@ html, body {
         height: 50px !important;;
     }
 }
+input,button{
+    text-align: center;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e2e2e2;
+}
 span {
     vertical-align: middle;
 }
@@ -18,7 +24,6 @@ span {
 i {
     vertical-align: middle;
 }
-
 .logo {
     font-family: cursive;
     font-size: 25px;
@@ -239,26 +244,65 @@ table.gridtable tbody .select {
     background-color: #66bdff;
     color: white;
 }
+/*排序*/
+.sort {
+    position: relative;
+    width: 10px;
+    height: 20px;
+    margin-left: 5px;
+    cursor: pointer !important;
+}
+.sort .sort-desc:hover {
+    border-top-color: #666;
+}
+.sort .sort-asc:hover {
+    border-bottom-color: #666;
+}
+.sort .sort-desc {
+    bottom: 2px;
+    border-bottom: none;
+    border-top-style: solid;
+    border-top-color: #b2b2b2;
+}
+.sort .sort-asc {
+    top: 3px;
+    border-top: none;
+    border-bottom-style: solid;
+    border-bottom-color: #b2b2b2;
+}
+.sort .sort-edge {
+    position: absolute;
+    left: 5px;
+    border-width: 5px;
+}
+.sort-edge {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: dashed;
+    border-color: transparent;
+    overflow: hidden;
+}
 .button:hover{
     background: #0079c3;
 }
 .button {
     float: left;
-    border: 1px solid #2e85c1;
+    border-color:#2e85c1;
     width: auto;
     height: 32px;
     line-height: 32px;
     color: #fff;
     background: #2e85c1;
-    cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: normal;
     margin: 10px 10px;
     padding: 0 5px;
     border-radius: 4px;
 }
 a.button.danger {
-    border: 1px solid #d9534f;
+    border-color:#d9534f;
     background: #d9534f;
 }
 .button.danger:hover{
@@ -271,7 +315,7 @@ a.button.danger {
     background: red !important;
 }
 a.button.success {
-    border: 1px solid #5cb85c;
+    border-color:#5cb85c;
     background: #5cb85c;
 }
 a.button.warning {
@@ -283,17 +327,37 @@ div.digg {
     margin: 3px;
     float: right;
     background: white;
+    font-size: 13px;
 }
-
+div.digg .skip{
+    font-size: 13px;
+    margin-left: 6px;
+    vertical-align: unset;
+    color: #999;
+}
+div.digg .skip input,button{
+    margin: 0 9px;
+    height: 27px;
+    width: 34px;
+    font-size: 13px;
+}
+div.digg .skip  button{
+    cursor: pointer;
+}
+div.digg .skip input:focus{
+    border: 1px solid #0079c3;
+}
 div.digg a {
     /*display: block;*/
     /*float: left;*/
-    font-size: 15px;
+    font-size: 13px;
     border: #aaaadd 1px solid;
     padding: 2px 8px 2px 8px;
     margin: 2px;
     color: #000000;
-    text-decoration: none
+    text-decoration: none;
+    background: #fff;
+
 }
 
 div.digg a:hover {

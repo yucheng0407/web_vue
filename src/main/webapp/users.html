@@ -31,13 +31,16 @@
                 <thead>
                 <tr>
                     <th><input type="checkbox" style="display: none"/><i for="checkbox" class="check"></i></th>
-                    <th v-for="config in tableConfig">{{config.name}}</th>
+                    <th v-for="config in tableConfig">{{config.name}}<span v-if="config.isSort" class="sort"><i
+                            class="sort-edge sort-asc" title="升序" @click="asc(config.type)"></i><i
+                            class="sort-edge sort-desc" title="降序" @click="desc(config.type)"></i></span></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr @dblclick="dblclick(data)" @click="click(data)"
                     v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
-                    <td><input type="checkbox" style="display: none"/><i for="checkbox" class="check" :class="{checked:data._sel}"></i></td>
+                    <td><input type="checkbox" style="display: none"/><i for="checkbox" class="check"
+                                                                         :class="{checked:data._sel}"></i></td>
                     <td v-for="config in tableConfig">{{data[config.type]}}</td>
                 </tr>
                 </tbody>
@@ -71,6 +74,14 @@
             return {page: {index: 1, pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
         },
         methods: {
+            asc: function (type) {
+                this.tableData.sort(function (a, b) { return a[type]-b[type] })
+                this.page.index=1;
+            },
+            desc: function (type) {
+                this.tableData.sort(function (a, b) { return b[type]-a[type] })
+                this.page.index=1;
+            },
             delSel: function () {
                 for (var i = this.tableData.length - 1; i >= 0; i--) {
                     if (this.tableData[i]._sel) {
@@ -98,16 +109,19 @@
         }
     });
     var list = [];
-    for (var i = 0; i < 50; i++) {
+    for (var i = 0; i < 10; i++) {
         list.push({a: i + 1, b: 2, c: 3, d: 4})
     }
+    var i=50;
     var vue = new Vue({
         el: "#page",
         data: {
             tableSetting: {
                 limit: 8, buttons: [{
-                    name: "新增",icon:"&#xe6e2;", onClick: function () {
-                        vue.$refs.table.getSel()
+                    name: "新增", icon: "&#xe6e2;", onClick: function () {
+                        vue.$refs.table.getSel();
+
+                        list.push({a: i=++i, b: 2, c: 3, d: 4})
                         debugger
                     }
                 }, {
@@ -117,7 +131,10 @@
                 }]
             },
             tableData: list,
-            tableConfig: [{name: 1111, type: 'a', width: '50'}, {name: 222, type: 'b'}, {name: 3, type: 'c'}, {
+            tableConfig: [{name: 1111, type: 'a', width: '50', isSort: true}, {name: 222, type: 'b'}, {
+                name: 3,
+                type: 'c'
+            }, {
                 name: 4,
                 type: 'd'
             }]
