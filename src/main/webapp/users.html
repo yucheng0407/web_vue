@@ -22,7 +22,7 @@
 <body>
 <div style="padding: 50px">
     <template id="baseTable">
-        <div :pagenum="page.pageNum=(Math.ceil(tableData.length / tableSetting.limit))">
+        <div :pagenum="page.pageNum=(Math.ceil(tableData.length / tableSetting.limit))" :pageLength="page.pageLength=tableData.length">
             <component is="baseButton" :buttons="tableSetting.buttons"></component>
             <table class="gridtable" style="width: 100%">
                 <colgroup>
@@ -30,7 +30,7 @@
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><input type="checkbox" style="display: none"/><i for="checkbox" class="check"></i></th>
+                    <th><input type="checkbox" style="display: none" /><i for="checkbox" class="check" :class="{checked:isAllChecked}" title="全选" @click="allChecked"></i></th>
                     <th v-for="config in tableConfig">{{config.name}}<span v-if="config.isSort" class="sort"><i
                             class="sort-edge sort-asc" title="升序" @click="asc(config.type)"></i><i
                             class="sort-edge sort-desc" title="降序" @click="desc(config.type)"></i></span></th>
@@ -71,9 +71,15 @@
         props: ['tableData', 'tableConfig', 'tableSetting'],
         template: '#baseTable',
         data: function () {
-            return {page: {index: 1, pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
+            return {isAllChecked:false,page: {index: 1, pageLength:this.tableData.length,pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
         },
         methods: {
+            allChecked:function () {
+                this.isAllChecked=!this.isAllChecked;
+                for (var i = this.tableData.length - 1; i >= 0; i--) {
+                   this.isAllChecked?Vue.set(this.tableData[i], '_sel', true):Vue.set(this.tableData[i], '_sel', false);
+                }
+            },
             asc: function (type) {
                 this.tableData.sort(function (a, b) { return a[type]-b[type] })
                 this.page.index=1;
@@ -99,7 +105,8 @@
             },
             click: function (data) {
                 if (data._sel) {//
-                    Vue.set(data, '_sel', null);
+                    Vue.set(data, '_sel', false);
+                    this.isAllChecked=false;
                     //   data._sel=null;
                 } else {
                     Vue.set(data, '_sel', true);
@@ -110,7 +117,7 @@
     });
     var list = [];
     for (var i = 0; i < 10; i++) {
-        list.push({a: i + 1, b: 2, c: 3, d: 4})
+        list.push({a: i + 1, b: 2, c: '3dasdsadsaasdsadsadsadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', d: 4})
     }
     var i=50;
     var vue = new Vue({

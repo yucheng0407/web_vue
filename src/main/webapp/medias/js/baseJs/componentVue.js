@@ -22,8 +22,8 @@ Vue.component("baseSearch", {
  */
 Vue.component("basePage", {
     props: ['page'],
-    template: '<div :other="otherUpdate" class="digg" ><a :class="{disabled:page.index==1}" @click="page.index>1?page.index--:page.index">&lt;</a>{{isStartOther?"...":""}}' +
-    '<a v-for="i in otherNum" :class="{current:(i+otherIndex-1)==page.index}" @click="page.index=(i+otherIndex-1)">{{(i+otherIndex-1)}}</a>{{isEndOther?"...":""}}<a :class="{disabled:page.index==page.pageNum}" @click="page.index<page.pageNum?page.index++:page.index">&gt;</a><span class="skip">到第<input v-model="skip" type="text" value="1">页<button type="button" @click="page.index=skip">确定</button></span></div>',
+    template: '<div :other="otherUpdate" class="page" ><a :class="{disabled:page.index==1}" @click="page.index>1?page.index--:page.index">&lt;</a>{{isStartOther?"...":""}}' +
+    '<a v-for="i in otherNum" :class="{current:(i+otherIndex-1)==page.index}" @click="page.index=(i+otherIndex-1)">{{(i+otherIndex-1)}}</a>{{isEndOther?"...":""}}<a :class="{disabled:page.index==page.pageNum}" @click="page.index<page.pageNum?page.index++:page.index">&gt;</a><span class="skip">到第<input v-model="skip" type="text" value="1">页<button type="button" @click="page.index=skip">确定</button></span><span style="vertical-align: unset;">共 {{page.pageLength}} 条</span></div>',
     data: function () {
         return {
             skip: 1,
