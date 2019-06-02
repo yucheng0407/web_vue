@@ -22,25 +22,31 @@
 <body>
 <div style="padding: 50px">
     <template id="baseTable">
-        <div :pagenum="page.pageNum=(Math.ceil(tableData.length / tableSetting.limit))" :pageLength="page.pageLength=tableData.length">
+        <div :pagenum="page.pageNum=(Math.ceil(tableData.length / tableSetting.limit))"
+             :pageLength="page.pageLength=tableData.length">
+            <component is="baseQuery" :table-data="tableData" :query-data="queryData"
+                       :query-config="queryConfig"></component>
             <component is="baseButton" :buttons="tableSetting.buttons"></component>
-            <table class="gridtable" style="width: 100%">
+            <table class="baseTable" style="width: 100%">
                 <colgroup>
                     <col v-for="config in tableConfig" :width="config.width"/>
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><input type="checkbox" style="display: none" /><i for="checkbox" class="check" :class="{checked:isAllChecked}" title="全选" @click="allChecked"></i></th>
+                    <th><i for="checkbox" class="check"
+                           :class="{checked:isAllChecked}" title="全选"
+                           @click="allChecked"></i></th>
                     <th v-for="config in tableConfig">{{config.name}}<span v-if="config.isSort" class="sort"><i
-                            class="sort-edge sort-asc"  :class="sortType" title="升序" @click="asc(config.type)"></i><i
-                            class="sort-edge sort-desc" :class="sortType" title="降序" @click="desc(config.type)"></i></span></th>
+                            class="sort-edge sort-asc" :class="sortType" title="升序" @click="asc(config.type)"></i><i
+                            class="sort-edge sort-desc" :class="sortType" title="降序"
+                            @click="desc(config.type)"></i></span></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr @dblclick="dblclick(data)" @click="click(data)"
                     v-for="data in tableSetting.limit?tableData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):tableData">
-                    <td><input type="checkbox" style="display: none"/><i for="checkbox" class="check"
-                                                                         :class="{checked:data._sel}"></i></td>
+                    <td><i for="checkbox" class="check"
+                           :class="{checked:data._sel}"></i></td>
                     <td v-for="config in tableConfig">{{data[config.type]}}</td>
                 </tr>
                 </tbody>
@@ -49,12 +55,63 @@
         </div>
     </template>
     <template id="baseButton">
-        <div style="float: left"><button v-for="button in buttons" class="button" @click="button.onClick" :class="button.type"><i
-                style="font-size: 20px" v-if="button.icon" class="iconfont" v-html="button.icon"></i><span>{{button.name}}</span></button>
+        <div style="float: left">
+            <button v-for="button in buttons" class="button" @click="button.onClick" :class="button.type"><i
+                    style="font-size: 20px" v-if="button.icon" class="iconfont" v-html="button.icon"></i><span>{{button.name}}</span>
+            </button>
+        </div>
+    </template>
+    <template id="baseQuery">
+        <div class="baseQuery">
+            <div class="item">
+                <div v-for="(con, key) in queryConfig" class="inline">
+                    <label class="laber">{{con.name}}</label>
+                    <div class="input-block">
+                        <component :config="con.config" :model="queryData" :model-name="key"
+                                   :is="getComp(con.type)"></component>
+                    </div>
+                </div>
+                <div class="inline">
+                    <component is="baseButton" :buttons="buttons"></component>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="baseSelect">
+        <!--<select v-model="value" style="display: none" name="label">-->
+        <!--<option value="">请选择标签</option>-->
+        <!--<option v-for="dict in dicts" value="dict.code" >{{dict.name}}</option>-->
+        <!--</select>-->
+        <div class="baseSelect" style="position: relative;background-color: #fff">
+            <input @blur="blur?display=true:display;" @click="display=!display"
+                   style="cursor: pointer;position:relative;z-index:1;background-color: #fff0" type="text"
+                   placeholder="请选择标签" :value="model[modelName]" readonly="" class="input" name=""><span
+                style="position: absolute;right: 15px;top: 6px;" class="sort"><i
+                class="sort-edge sort-desc" style="top:unset;bottom: 2px;border-width: 6px;"
+                :class="{trans:!display}"></i></span>
+            <ul @mouseover="blur=false" @mouseout="blur=true" :style="{display: display?'none':'block'}">
+                <li :class="{this:!model[modelName]}" @click="model[modelName]='';display=true">
+                    请选择标签
+                </li>
+                <li :class="{this:model[modelName]==dict.code}" v-for="dict in config.dictCode"
+                    @click="model[modelName]=dict.code;display=true">{{dict.name}}
+                </li>
+            </ul>
+        </div>
+    </template>
+    <template id="baseInput">
+        <!--<select v-model="value" style="display: none" name="label">-->
+        <!--<option value="">请选择标签</option>-->
+        <!--<option v-for="dict in dicts" value="dict.code" >{{dict.name}}</option>-->
+        <!--</select>-->
+        <div class="baseInput">
+            <input v-model="model[modelName]" type="text" name="author" placeholder="请输入" autocomplete="off"
+                   class="input">
         </div>
     </template>
     <div id="page">
-        <component ref="table" is="baseTable" :table-config="tableConfig" :table-data="tableData"
+        <component ref="table" is="baseTable" :query-data="queryData" :query-config="queryConfig"
+                   :table-config="tableConfig" :table-data="tableData"
                    :table-setting="tableSetting"></component>
     </div>
 </div>
@@ -63,32 +120,87 @@
         props: ['buttons'],
         template: '#baseButton'
     })
+    Vue.component("baseQuery", {
+        props: ["queryData", "queryConfig", "tableData"],
+        template: '#baseQuery',
+        methods: {
+            getComp: function (type) {
+                var comp;
+                switch (type) {
+                    case "dict": {
+                        comp = "baseSelect";
+                        break
+                    }
+                    default: {
+                        comp = "baseInput";
+                        break
+                    }
+                }
+                return comp;
+            }
+        },
+        data: function () {
+            return {
+                buttons: [{
+                    name: "搜索", icon: "&#xe77c;", onClick: $.proxy(function () {
+                        var baseQuery = this;
+                        var table = this.tableData.filter(function (a) {
+                            for (var key in baseQuery.queryData) {
+                                if (a[key] && a[key] === baseQuery.queryData[key]) {
+                                    return true;
+                                }
+
+                            }
+                            return false
+                        })
+                        this.tableData.splice(0, this.tableData.length);
+//                        this.tableData.push(table[0])
+//                     Array.prototype.splice.apply(this.tableData, [0, 10]);
+                        Array.prototype.push.apply(this.tableData, table);
+                    }, this)
+                }]
+            }
+        }
+
+    })
     /**
      * 翻页组件
      * page:{当前页 index:Number,页数 pageNum:Number}
      */
     Vue.component("baseTable", {
-        props: ['tableData', 'tableConfig', 'tableSetting'],
+        props: ['tableData', 'tableConfig', 'tableSetting', 'queryData', 'queryConfig'],
         template: '#baseTable',
         data: function () {
-            return {sortType:null,isAllChecked:false,page: {index: 1, pageLength:this.tableData.length,pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))}}
+            return {
+                sortType: null,
+                isAllChecked: false,
+                page: {
+                    index: 1,
+                    pageLength: this.tableData.length,
+                    pageNum: (Math.ceil(this.tableData.length / this.tableSetting.limit))
+                }
+            }
         },
         methods: {
-            allChecked:function () {
-                this.isAllChecked=!this.isAllChecked;
+            allChecked: function () {
+                this.isAllChecked = !this.isAllChecked;
                 for (var i = this.tableData.length - 1; i >= 0; i--) {
-                   this.isAllChecked?Vue.set(this.tableData[i], '_sel', true):Vue.set(this.tableData[i], '_sel', false);
+                    this.isAllChecked ? Vue.set(this.tableData[i], '_sel', true) : Vue.set(this.tableData[i], '_sel', false);
                 }
             },
             asc: function (type) {
-                this.tableData.sort(function (a, b) { return a[type]-b[type] })
-                this.page.index=1;
-                this.sortType="sort-asced";
+                this.tableData.sort(function (a, b) {
+                    return a[type] - b[type]
+                })
+                this.page.index = 1;
+                this.sortType = "sort-asced";
             },
             desc: function (type) {
-                this.tableData.sort(function (a, b) { return b[type]-a[type] })
-                this.page.index=1;
-                this.sortType="sort-desced";
+                this.tableData.sort(function (a, b) {
+                    return b[type] - a[type]
+                })
+                this.page.index = 1;
+                this.sortType = "sort-desced";
             },
             delSel: function () {
                 for (var i = this.tableData.length - 1; i >= 0; i--) {
@@ -108,7 +220,7 @@
             click: function (data) {
                 if (data._sel) {//
                     Vue.set(data, '_sel', false);
-                    this.isAllChecked=false;
+                    this.isAllChecked = false;
                     //   data._sel=null;
                 } else {
                     Vue.set(data, '_sel', true);
@@ -117,11 +229,31 @@
             }
         }
     });
+
+    Vue.component("baseInput", {
+        props: ['config', 'model', 'modelName'],
+        template: '#baseInput'
+    });
+    Vue.component("baseSelect", {
+        props: ['config', 'model', 'modelName'],
+        data: function () {
+            return {
+                blur: true,
+                display: true
+            }
+        },
+        template: '#baseSelect'
+    });
     var list = [];
     for (var i = 0; i < 10; i++) {
-        list.push({a: i + 1, b: 2, c: '3dasdsadsaasdsadsadsadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', d: 4})
+        list.push({
+            a: i + 1,
+            b: 2,
+            c: '3dasdsadsaasdsadsadsadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
+            d: 4
+        })
     }
-    var i=50;
+    var i = 50;
     var vue = new Vue({
         el: "#page",
         data: {
@@ -130,7 +262,7 @@
                     name: "新增", icon: "&#xe6e2;", onClick: function () {
                         vue.$refs.table.getSel();
 
-                        list.push({a: i=++i, b: 2, c: 3, d: 4})
+                        list.push({a: i = ++i, b: 2, c: 3, d: 4})
                         debugger
                     }
                 }, {
@@ -146,7 +278,23 @@
             }, {
                 name: 4,
                 type: 'd'
-            }]
+            }],
+            queryData: {a: '', b: ''},
+            queryConfig: {
+                a: {  //值班开始时间
+//                    rules: {checkSave: ["notNull"]},
+                    name: "a",
+                    type: "dict",
+                    config: {
+                        dictCode: [{name: 1, code: 1}, {name: 2, code: 2}, {name: 3, code: 3}]
+                    }
+                },
+                b: {  //值班开始时间
+//                    rules: {checkSave: ["notNull"]},
+                    name: "b"
+                }
+            }
+
         }
     })
 </script>

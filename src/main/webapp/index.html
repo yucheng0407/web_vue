@@ -25,7 +25,7 @@
         <ul v-if="menus&&menus.length>0">
             <li
                 v-for="menu in menus">
-                <a :title="menu.name" :class="{topselcet:curData.compMenu.name==menu.name}" href="javascript:void(0)" @click="goTo(menu)"><i v-if="menu.icon" class="iconfont" v-html="menu.icon"></i><span v-else="menu.name" class="xx">{{menu.name}}</span></a>
+                <a :title="menu.name" :class="{topselcet:curData.compMenu.name==menu.name}" href="javascript:void(0)" @click="goTo(menu)"><i v-if="menu.icon" class="iconfont" v-html="menu.icon"></i><span v-else="menu.name" class="xx" v-text="menu.name"></span></a>
                 <div v-if="menu.subMenus&&menu.subMenus.length>0" class="subMenus">
                     <component :style-data="styleData" :p-cur-data.sync="curData" :comp-menu="menu" is="pageComp"></component>
                 </div>
@@ -40,7 +40,7 @@
     <div class="rightBody" class="leftMenu"
          :style="curData.compMenu.subMenus&&curData.compMenu.subMenus.length>0?rightBodyStyle:{width:'100%'}">
         <div class="toggle " v-if="curData.compMenu.subMenus&&curData.compMenu.subMenus.length>0">
-            <a @click="styleData.isAnimate=true;styleData.isLeftMenuShow=!styleData.isLeftMenuShow"><i class="iconfont" >{{styleData.isLeftMenuShow?'&#xe74f;':'&#xe70c;'}}</i></a>
+            <a @click="styleData.isAnimate=true;styleData.isLeftMenuShow=!styleData.isLeftMenuShow"><i class="iconfont" v-html="styleData.isLeftMenuShow?'&#xe74f;':'&#xe70c;'" ></i></a>
         </div>
         <iframe name="index" frameborder="0" width="100%" height="100%" scrolling="auto"
                 :src="curData.curMenu.url"></iframe>
@@ -50,7 +50,7 @@
 <template id="template-page">
     <ul>
         <li v-for="menu in compMenu.subMenus">
-            <a :class="{topselcet1:pCurData.curMenu.name==menu.name}" href="javascript:void(0)" @click="updateP(menu,compMenu)"><i v-if="menu.icon" class="iconfont" v-html="menu.icon"></i><span style="vertical-align: middle;">{{menu.name}}</span></a>
+            <a :class="{topselcet1:pCurData.curMenu.name==menu.name}" href="javascript:void(0)" @click="updateP(menu,compMenu)"><i v-if="menu.icon" class="iconfont" v-html="menu.icon"></i><span style="vertical-align: middle;" v-text="menu.name"></span></a>
         </li>
     </ul>
 </template>
