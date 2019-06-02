@@ -245,7 +245,7 @@
         template: '#baseSelect'
     });
     var list = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 50; i++) {
         list.push({
             a: i + 1,
             b: 2,
@@ -258,7 +258,7 @@
         el: "#page",
         data: {
             tableSetting: {
-                limit: 8, buttons: [{
+                limit: 15, buttons: [{
                     name: "新增", icon: "&#xe6e2;", onClick: function () {
                         vue.$refs.table.getSel();
 
