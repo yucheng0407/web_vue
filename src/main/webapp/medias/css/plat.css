@@ -186,16 +186,17 @@ i {
     background-position-x: right;
 }
 
-table.baseTable {
+.baseTable table {
     font-family: verdana, arial, sans-serif;
     font-size: 14px;
     color: #666;
     border-width: 1px;
     border-color: #666666;
     border-collapse: collapse;
+    width: 100%;
 }
 
-table.baseTable thead th {
+.baseTable table thead th {
     border: 1px solid #e6e6e6;
     padding: 5px;
     background-color: #f2f2f2;
@@ -205,7 +206,7 @@ table.baseTable thead th {
     overflow: hidden;
 }
 
-table.baseTable tbody td {
+.baseTable table tbody td {
     text-align: center;
     border: 1px solid #e6e6e6;
     padding: 5px;
@@ -213,12 +214,12 @@ table.baseTable tbody td {
     overflow: hidden;
 }
 
-table.baseTable .checked {
+.baseTable table .checked {
     border-color: #1E9FFF !important;
     background-color: #1E9FFF !important;
 }
 
-table.baseTable .checked:before {
+.baseTable table .checked:before {
     color: white;
     content: "\e750";
     font-family: "iconfont" !important;
@@ -228,11 +229,11 @@ table.baseTable .checked:before {
     -moz-osx-font-smoothing: grayscale;
 }
 
-table.baseTable .check:hover {
+.baseTable table .check:hover {
     border-color: #1E9FFF;
 }
 
-table.baseTable .check {
+.baseTable table .check {
     right: auto;
     left: 0;
     width: 18px;
@@ -247,17 +248,17 @@ table.baseTable .check {
     display: inline-block;
 }
 
-table.baseTable tbody tr {
+.baseTable table tbody tr {
     background-color: #ffffff;
     height: 28px;
     line-height: 28px;
 }
 
-table.baseTable tbody tr:hover:not(.select) {
+.baseTable table tbody tr:hover:not(.select) {
     background-color: #f2f2f2;
 }
 
-table.baseTable tbody .select {
+.baseTable table tbody .select {
     background-color: #66bdff;
     color: white;
 }
@@ -496,7 +497,7 @@ div.basePage a.disabled {
     position: relative;
     height: 42px;
     line-height: 42px;
-    padding-bottom: 25px;
+    padding: 15px;
     border-bottom: 1px solid #f6f6f6;
     color: #333;
     border-radius: 2px 2px 0 0;
