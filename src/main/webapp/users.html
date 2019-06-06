@@ -17,32 +17,6 @@
             background: #fff;
 
         }
-
-        .baseGrid {
-            width: 100%;
-            background: #f2f2f2;
-            float: left;
-            padding-bottom:10px;
-        }
-
-        .baseGrid ul.gridUl {
-            padding: 10px;
-        }
-
-        .baseGrid ul li.gridLi {
-            height: 250px;
-            width: 20%;
-            float: left;
-            box-sizing: border-box;
-            padding: 4px;
-
-        }
-
-        .baseGrid ul li div.gridDiv {
-            height: 100%;
-            /* width: 100%; */
-            background: #fff;
-        }
     </style>
 </head>
 <body>
@@ -53,8 +27,35 @@
             <component is="baseQuery" :list-data="listData" :query-data="queryData"
                        :query-config="queryConfig"></component>
             <component is="baseButton" :buttons="tableSetting.buttons"></component>
+            <div style="float: right">
+                <component is="baseButton" :buttons="grid?tableButton:gridButton"></component>
+            </div>
             <div style="max-height: 350px;overflow-y: auto;width: 100%;">
-                <div class="baseTable">
+                <div v-if="grid" class="baseGrid">
+                    <ul class="gridUl">
+                        <li class="gridLi" @dblclick="dblclick(data)" @click="click(data)"
+                            v-for="data in tableSetting.limit?listData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):listData">
+                            <div class="gridDiv">
+                                <div style="position:relative;height: 80px;display: flex;">
+                                    <i for="checkbox" class="check"
+                                       :class="{checked:data._sel}"></i>
+                                    <div class="imgBackground">
+                                        <i class="iconfont" style="font-size: 40px;display: block;"> &#xe790;</i>
+                                    </div>
+                                </div>
+                                <div class="baseForm" style="padding:5px">
+                                    <table style="padding: 5px">
+                                        <tr v-for="config in tableConfig" style="height: 20px;line-height: 20px">
+                                            <th style="width: 30%">{{config.name}}</th>
+                                            <td :title="data[config.type]">{{data[config.type]}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div v-else class="baseTable">
                     <table>
                         <colgroup>
                             <col v-for="config in tableConfig" :width="config.width"/>
@@ -76,22 +77,10 @@
                             v-for="data in tableSetting.limit?listData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):listData">
                             <td><i for="checkbox" class="check"
                                    :class="{checked:data._sel}"></i></td>
-                            <td v-for="config in tableConfig">{{data[config.type]}}</td>
+                            <td v-for="config in tableConfig" :title="data[config.type]">{{data[config.type]}}</td>
                         </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="baseGrid">
-                    <ul class="gridUl">
-                        <li class="gridLi" @dblclick="dblclick(data)" @click="click(data)"
-                            v-for="data in tableSetting.limit?listData.slice((page.index-1)*tableSetting.limit,page.index*tableSetting.limit):listData">
-                            <div class="gridDiv">
-                                <ul class="grid">
-                                    <li v-for="config in tableConfig">{{data[config.type]}}</li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </div>
             <component v-if="tableSetting.limit" is="basePage" :page="page"></component>
@@ -216,12 +205,23 @@
         data: function () {
             return {
                 sortType: null,
+                grid: false,
                 isAllChecked: false,
                 page: {
                     index: 1,
                     pageLength: this.listData.length,
                     pageNum: (Math.ceil(this.listData.length / this.tableSetting.limit))
-                }
+                },
+                gridButton: [{
+                    name: "卡片", icon: "&#xe608;", onClick: $.proxy(function () {
+                        this.grid = !this.grid;
+                    }, this)
+                }],
+                tableButton: [{
+                    name: "列表", icon: "&#xe62b;", onClick: $.proxy(function () {
+                        this.grid = !this.grid;
+                    }, this)
+                }]
             }
         },
         methods: {
@@ -288,7 +288,7 @@
         template: '#baseSelect'
     });
     var list = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 50; i++) {
         list.push({
             a: i + 1,
             b: 2,
@@ -301,7 +301,7 @@
         el: "#page",
         data: {
             tableSetting: {
-                limit: 8, buttons: [{
+                limit: 10, buttons: [{
                     name: "新增", icon: "&#xe6e2;", onClick: function () {
                         vue.$refs.table.getSel();
                         list.push({a: i = ++i, b: 2, c: 3, d: 4})

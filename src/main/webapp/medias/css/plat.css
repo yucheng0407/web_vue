@@ -13,7 +13,6 @@ html, body {
         height: 50px !important;;
     }
 }
-
 input, button {
     text-align: center;
     box-sizing: border-box;
@@ -200,8 +199,6 @@ i {
     border: 1px solid #e6e6e6;
     padding: 5px;
     background-color: #f2f2f2;
-    height: 28px;
-    line-height: 28px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
@@ -214,31 +211,31 @@ i {
     overflow: hidden;
 }
 
-.baseTable table .checked {
+ .checked {
     border-color: #1E9FFF !important;
     background-color: #1E9FFF !important;
 }
 
-.baseTable table .checked:before {
+ .checked:before {
     color: white;
     content: "\e750";
     font-family: "iconfont" !important;
-    font-size: 16px;
+    font-size: 18px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-.baseTable table .check:hover {
+ .check:hover {
     border-color: #1E9FFF;
 }
 
-.baseTable table .check {
+ .check {
     right: auto;
     left: 0;
     width: 18px;
     height: 18px;
-    line-height: 16px;
+    line-height: 18px;
     border: 1px solid #d2d2d2;
     font-size: 12px;
     border-radius: 2px;
@@ -247,11 +244,12 @@ i {
     transition: .1s linear;
     display: inline-block;
 }
-
-.baseTable table tbody tr {
-    background-color: #ffffff;
+.baseTable table tr {
     height: 28px;
     line-height: 28px;
+}
+.baseTable table tbody tr {
+    background-color: #ffffff;
 }
 
 .baseTable table tbody tr:hover:not(.select) {
@@ -262,7 +260,86 @@ i {
     background-color: #66bdff;
     color: white;
 }
+/*表单*/
+.baseForm table {
+    font-family: verdana, arial, sans-serif;
+    font-size: 14px;
+    color: #666;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    width: 100%;
+}
 
+.baseForm table  th {
+    border: 1px solid #e6e6e6;
+    padding: 5px;
+    background-color: #f2f2f2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.baseForm table  td {
+    text-align: center;
+    border: 1px solid #e6e6e6;
+    padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.baseForm table tbody tr {
+    background-color: #ffffff;
+    height: 28px;
+    line-height: 28px;
+}
+.baseForm table tbody .select {
+    background-color: #66bdff;
+    color: white;
+}
+.baseGrid {
+    width: 100%;
+    background: #f2f2f2;
+    float: left;
+    padding-bottom: 10px;
+}
+
+.baseGrid ul.gridUl {
+    padding: 10px;
+}
+
+.baseGrid ul li.gridLi {
+    width: 20%;
+    float: left;
+    box-sizing: border-box;
+    padding: 4px;
+
+}
+
+.baseGrid ul li div.gridDiv {
+    height: 100%;
+    /* width: 100%; */
+    background: #fff;
+}
+
+.baseGrid div.gridDiv .imgBackground {
+    background: #2e86c1;
+    height: 50px;
+    width: 50px;
+    margin: auto;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 50%;
+}
+.baseGrid .check{
+    width: 23px;
+    height: 23px;
+    line-height: 23px;
+    position: absolute;
+    top:5px;
+    left: 5px;
+}
+.baseGrid .checked:before {
+    font-size: 23px;
+}
 /*排序*/
 .sort {
     position: relative;
@@ -294,6 +371,7 @@ i {
     border-top-style: solid;
     border-top-color: #b2b2b2;
 }
+
 .sort .sort-asc {
     top: 3px;
     border-top: none;
@@ -503,6 +581,7 @@ div.basePage a.disabled {
     border-radius: 2px 2px 0 0;
     font-size: 14px;
 }
+
 /**
 动画
  */
@@ -516,10 +595,12 @@ div.basePage a.disabled {
         opacity: 1;
     }
 }
+
 .trans {
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
 }
+
 .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
 }
