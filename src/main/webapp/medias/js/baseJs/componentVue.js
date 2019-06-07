@@ -66,3 +66,4 @@ Vue.component("basePage", {
         }
     }
 });
+

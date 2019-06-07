@@ -4,11 +4,21 @@ var data = [{
     comp: "pageComp",
     url: "iconFont.html",
     icon: "&#xe71d;",
-    subMenus: [{name: "主页1-1",icon: "&#xe71d;", comp: "menucomp", url: "test.html"}, {name: "主页1-2", comp: "pageComp",icon:"&#xe71d;",url:"users.html"}, {
+    subMenus: [{name: "主页1-1", icon: "&#xe71d;", comp: "menucomp", url: "iconFont.html"}, {
+        name: "主页1-2",
+        comp: "pageComp",
+        icon: "&#xe71d;",
+        url: "users.html"
+    }, {
         name: "主页1-3",
         comp: "pageComp"
     }]
-}, {name: "后台管理",icon:"&#xe758;",subMenus: [{name: "用户管理", icon:"&#xe73d;",comp: "menucomp", url: "users.html"}], comp: "menucomp"}, {
+}, {
+    name: "后台管理",
+    icon: "&#xe758;",
+    subMenus: [{name: "用户管理", icon: "&#xe73d;", comp: "menucomp", url: "users.html"}],
+    comp: "menucomp"
+}, {
     name: "主页3",
     comp: "pageComp"
 }];
@@ -18,7 +28,7 @@ var Vmenu = new Vue({
         styleData: {
             isLeftMenuShow: true,
             isAnimate: false,
-            leftMenuWidth:$(".leftMenu").width()
+            leftMenuWidth: $(".leftMenu").width()
         },
         curData: {
             compMenu: data[0],
@@ -77,9 +87,12 @@ var Vmenu = new Vue({
     }
     ,
     components: {
-        pageComp: {
+        /**
+         * 下级菜单组件
+         */
+        menuComp: {
             props: ['compMenu', 'pCurData', 'styleData'],
-            template: '#template-page',
+            template: '#menuComp',
             methods: {
                 updateP: function (menu, compMenu) {
                     // this.$emit("update:styleData", {
@@ -94,6 +107,55 @@ var Vmenu = new Vue({
                     })
                 }
             }
+        },
+        /**
+         * 首页窗口管理组件
+         */
+        frameComp: {
+            props: ['url', 'title', 'pCurData'],
+            data: function () {
+                var curframe = {url: this.url, title: this.title, pCurData: JSON.parse(JSON.stringify(this.pCurData))};
+                return {frames: [curframe], curframe: curframe,height:$(".body").height() -70}
+            },
+            watch: {
+                title: function () {
+                    var frameComp = this;
+                    var _frames = this.frames.filter(function (a) {
+                        return a.url == frameComp.url && a.title == frameComp.title
+                    });
+                    if (_frames.length > 0) {
+                        this.curframe = _frames[0];
+                    } else {
+                        this.curframe = {
+                            url: this.url,
+                            title: this.title,
+                            pCurData: JSON.parse(JSON.stringify(this.pCurData))
+                        };
+                        this.frames.push(this.curframe)
+                    }
+                }
+            },
+            methods: {
+                updateP: function (frame) {
+                    this.curframe = frame;
+                    // this.$emit("update:styleData", {
+                    //     isLeftMenuShow: true,
+                    //     isAnimate: false
+                    // });
+                    this.pCurData.compMenu = frame.pCurData.compMenu;
+                    this.pCurData.curMenu = frame.pCurData.curMenu;
+                },
+                close: function (index) {
+                    var l = this.frames.length;
+                    if (l !== 1) {
+                        var a = this.frames.splice(index, 1);
+                        if (a[0] == this.curframe) {
+                            this.updateP(this.frames[l - 2])
+                        }
+                    }
+                }
+            },
+            template: "#frameComp"
         }
     }
 })
